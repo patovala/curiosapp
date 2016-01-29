@@ -1,0 +1,7 @@
+project.properties
+curiosapp.iml
+proguard-project.txt
+.idea/
+gen/
+bin/
+.gradle
