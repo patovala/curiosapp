@@ -1,13 +1,13 @@
 package com.sonoman.curiosapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
-import android.widget.TextView;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,14 @@ public class InicioActivity extends Activity {
         List<Pregunta> preguntas = getPreguntas();
         Log.e("Preguntas", "Preguntas " + preguntas);
 
-        // TODO: Necesitamos ir presentando las preguntas
+        Intent intent = new Intent(this, PreguntaActivity.class);
+        //Pasar las preguntas a la siguiente actividad
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PREGUNTAS", (Serializable) preguntas);
+        intent.putExtras(bundle);
+
+        //Iniciar la actividad
+        startActivity(intent);
     }
 
     public List<Pregunta> getPreguntas(){

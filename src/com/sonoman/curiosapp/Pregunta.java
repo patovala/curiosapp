@@ -1,9 +1,11 @@
 package com.sonoman.curiosapp;
 
+import java.io.Serializable;
+
 /**
  * Created by janinatatiana on 1/29/16.
  */
-public class Pregunta {
+public class Pregunta implements Serializable {
     private String id;
     private String categoria;
     private String texto;
