@@ -6,10 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
+import java.io.*;
+
+
 
 /**
  * Created by janinatatiana on 2/15/16.
@@ -19,12 +26,14 @@ public class PreguntaActivity extends Activity {
     private Pregunta preguntaActual;
     private List<Pregunta> preguntas;
     private int totalPreguntas;
+    private Set<Respuesta> respuestas = new HashSet<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pregunta);
 
+        //Recuperar el parámetro enviado desde la actividad de inicio
         Bundle extras = getIntent().getExtras();
         preguntas = (List<Pregunta>) extras.getSerializable("PREGUNTAS");
         totalPreguntas = preguntas.size();
@@ -36,10 +45,13 @@ public class PreguntaActivity extends Activity {
         preguntaActual = preguntas.get(preguntaActualIndex);
         TextView message = (TextView) findViewById(R.id.pregunta);
         message.setText(preguntaActual.getTexto());
+
+        //Presentar respuesta previa si existe, caso contrario se presenta el campo vacio
+        this.fijarRespuestaPrevia();
     }
 
     public void guardar(View view) {
-        //Tenemos que ir guardando las respuestas del usuario
+        this.guardarPregunta();
 
         if (preguntaActualIndex < totalPreguntas - 1) {
             preguntaActualIndex++;
@@ -82,7 +94,36 @@ public class PreguntaActivity extends Activity {
         }
     }
 
+    public void  guardarPregunta() {
+        Pregunta pregunta = preguntas.get(preguntaActualIndex);
+        EditText textoRespuesta = (EditText) findViewById(R.id.respuesta);
+        Respuesta respuesta = new Respuesta(pregunta.getTexto(), pregunta.getId(), textoRespuesta.getText().toString(), null);
+
+        respuestas.add(respuesta);
+    }
+
+    public void fijarRespuestaPrevia() {
+        EditText textoRespuesta = (EditText) findViewById(R.id.respuesta);
+        String preguntaId = preguntas.get(preguntaActualIndex).getId();
+        Respuesta respuesta = null;
+
+        for (Respuesta r: respuestas) {
+           if(r.getIdPregunta().equals(preguntaId)) {
+               respuesta = r;
+           }
+        }
+
+        if (respuesta !=null) {
+            textoRespuesta.setText(respuesta.getRespuesta());
+        } else {
+            textoRespuesta.setText("");
+        }
+    }
+
+
     public void guardarRespuestas() {
+        Log.e("Respuestas", "Respuestas " + respuestas);
+        //TODO: Guardar las respuestas en un archivo
 
         //Presentar el dialogo despues de guardar las repuestas
         AlertDialog alertDialog = new AlertDialog.Builder(PreguntaActivity.this).create();
