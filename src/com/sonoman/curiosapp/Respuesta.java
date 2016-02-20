@@ -1,7 +1,7 @@
 package com.sonoman.curiosapp;
 
 /**
- * Created by janinatatiana on 2/16/16.
+ * Created by on 2/16/16.
  */
 public class Respuesta {
     private String idPregunta;

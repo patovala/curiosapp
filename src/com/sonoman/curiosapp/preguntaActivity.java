@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.List;
 
 /**
- * Created by janinatatiana on 2/15/16.
+ * Created by on 2/15/16.
  */
 public class PreguntaActivity extends Activity {
     private int preguntaActualIndex = 0;
