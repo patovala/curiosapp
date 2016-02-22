@@ -7,4 +7,5 @@ bin/
 .gradle
 out/
 .DS_Store
-
+.ropeproject
+*.swp
