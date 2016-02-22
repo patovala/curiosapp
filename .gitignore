@@ -5,3 +5,6 @@ proguard-project.txt
 gen/
 bin/
 .gradle
+out/
+.DS_Store
+
